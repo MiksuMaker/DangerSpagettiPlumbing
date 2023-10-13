@@ -37,10 +37,10 @@ public class PlayerInput : MonoBehaviour
     {
         mostRecentMovementInput = Vector2.zero;
 
-        if (Input.GetKey(up)) { mostRecentMovementInput = Vector2.up; }
-        if (Input.GetKey(left)) { mostRecentMovementInput = Vector2.left; }
-        if (Input.GetKey(down)) { mostRecentMovementInput = Vector2.down; }
-        if (Input.GetKey(right)) { mostRecentMovementInput = Vector2.right; }
+        if (Input.GetKeyDown(up)) { mostRecentMovementInput = Vector2.up; }
+        if (Input.GetKeyDown(left)) { mostRecentMovementInput = Vector2.left; }
+        if (Input.GetKeyDown(down)) { mostRecentMovementInput = Vector2.down; }
+        if (Input.GetKeyDown(right)) { mostRecentMovementInput = Vector2.right; }
 
         // Don't update if no inputs detected
         if (mostRecentMovementInput != Vector2.zero)
