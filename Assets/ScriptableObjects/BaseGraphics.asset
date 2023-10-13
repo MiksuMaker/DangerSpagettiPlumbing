@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3518a77ff80aa4e44b93007b4b848f57, type: 3}
+  m_Name: BaseGraphics
+  m_EditorClassIdentifier: 
+  head_shut: {fileID: 1236598109, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
+  head_open: {fileID: -795578888, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
+  head_body_straight: {fileID: 1875397818, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
+  head_body_turn: {fileID: 704410100, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
+  head_tail: {fileID: -362018003, guid: 0009024a885a9f8419a5bca90e056271, type: 3}

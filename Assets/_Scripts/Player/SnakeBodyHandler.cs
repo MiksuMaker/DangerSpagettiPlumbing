@@ -5,6 +5,9 @@ using UnityEngine;
 public class SnakeBodyHandler : MonoBehaviour
 {
     #region Properties
+    // References
+
+
     [SerializeField]
     List<GameObject> bodyparts = new List<GameObject>();
 
