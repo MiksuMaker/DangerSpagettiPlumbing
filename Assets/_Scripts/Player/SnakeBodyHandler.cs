@@ -96,5 +96,10 @@ public class SnakeBodyHandler : MonoBehaviour
             lastMoveDirectionIsRight = true;
         }
     }
+
+    public Vector2 GetCurrentCoordinates()
+    {
+        return bodyparts[0].transform.position;
+    }
     #endregion
 }

@@ -44,7 +44,7 @@ public class SnakeGraphicsController : MonoBehaviour
         // TODO: Get Orientation + Handle GameObject retrieval properly
         piece.orientation = GetOrientation(headward, current, tailward);
 
-        Debug.Log("Orientation for: _" + current.name + "_ is " + piece.orientation);
+        //Debug.Log("Orientation for: _" + current.name + "_ is " + piece.orientation);
 
         // Determine the rotation for the piece
         int rotation = 0;

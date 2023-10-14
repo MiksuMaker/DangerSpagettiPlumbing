@@ -22,6 +22,12 @@ public class SnakeMover : MonoBehaviour
     public void TryUpdateMovementDirection(Vector2 newDirection)
     {
         // Check if movement direction is valid
+        if (TileManager.Instance.IsThereTileAt(body.GetCurrentCoordinates() 
+                                                    + newDirection))
+        {
+            // Blocked movement!
+            return;
+        }
 
         currentMoveDirection = newDirection;
 
