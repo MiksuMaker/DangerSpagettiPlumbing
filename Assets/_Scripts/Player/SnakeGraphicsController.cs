@@ -54,33 +54,33 @@ public class SnakeGraphicsController : MonoBehaviour
             // BODY, STRAIGHT
             case (Piece.Type.body, Piece.Orientation.left): rotation = 0; break;
             case (Piece.Type.body, Piece.Orientation.right): rotation = 0; break;
-            case (Piece.Type.body, Piece.Orientation.up): rotation = 0; break;
-            case (Piece.Type.body, Piece.Orientation.down): rotation = 0; break;
+            case (Piece.Type.body, Piece.Orientation.up): rotation = 90; break;
+            case (Piece.Type.body, Piece.Orientation.down): rotation = 90; break;
 
             // BODY, TURNED (Update graphics too)
             case (Piece.Type.body, Piece.Orientation.left_up): rotation = 0; turnPiece = true; break;
-            case (Piece.Type.body, Piece.Orientation.left_down): rotation = 0; turnPiece = true; break;
-            case (Piece.Type.body, Piece.Orientation.right_up): rotation = 0; turnPiece = true; break;
-            case (Piece.Type.body, Piece.Orientation.right_down): rotation = 0; turnPiece = true; break;
+            case (Piece.Type.body, Piece.Orientation.left_down): rotation = 90; turnPiece = true; break;
+            case (Piece.Type.body, Piece.Orientation.right_up): rotation = -90; turnPiece = true; break;
+            case (Piece.Type.body, Piece.Orientation.right_down): rotation = 180; turnPiece = true; break;
 
             // HEAD
-            case (Piece.Type.head, Piece.Orientation.left): rotation = 0; break;
+            case (Piece.Type.head, Piece.Orientation.left): rotation = 180; break;
             case (Piece.Type.head, Piece.Orientation.right): rotation = 0; break;
-            case (Piece.Type.head, Piece.Orientation.up): rotation = 0; break;
-            case (Piece.Type.head, Piece.Orientation.down): rotation = 0; break;
+            case (Piece.Type.head, Piece.Orientation.up): rotation = 90; break;
+            case (Piece.Type.head, Piece.Orientation.down): rotation = -90; break;
 
             // TAIL
-            case (Piece.Type.tail, Piece.Orientation.left): rotation = 0; break;
+            case (Piece.Type.tail, Piece.Orientation.left): rotation = 180; break;
             case (Piece.Type.tail, Piece.Orientation.right): rotation = 0; break;
-            case (Piece.Type.tail, Piece.Orientation.up): rotation = 0; break;
-            case (Piece.Type.tail, Piece.Orientation.down): rotation = 0; break;
+            case (Piece.Type.tail, Piece.Orientation.up): rotation = 90; break;
+            case (Piece.Type.tail, Piece.Orientation.down): rotation = -90; break;
         }
 
         // If it was a turning piece, change graphics
         if (turnPiece) { current.spriteRenderer.sprite = graphics.body_turn; }
 
         // Rotate the bodypiece graphics
-        //current.
+        current.graphicsTransform.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
 
     private Piece.Orientation GetOrientation(BodyBlock headward, BodyBlock current, BodyBlock tailward)
@@ -108,21 +108,25 @@ public class SnakeGraphicsController : MonoBehaviour
 
             case (true, false): // Bodypiece is HEAD
 
-                Vector2 fakeHeadPos = current.transform.position + (current.transform.position - tailward.transform.position);
+                //Vector2 fakeHeadPos = current.transform.position + (current.transform.position - tailward.transform.position);
 
-                return CalculateOrientation(fakeHeadPos,
-                                            current.transform.position,
-                                            tailward.transform.position);
+                //return CalculateOrientation(fakeHeadPos,
+                //                            current.transform.position,
+                //                            tailward.transform.position);
+
+                return CalculateOrientation(tailward.transform.position, currentPos, true);
 
                 break;
 
             case (false, true): // Bodypiece is TAILS
 
-                Vector2 fakeTailPos = current.transform.position + (current.transform.position - headward.transform.position);
+                //Vector2 fakeTailPos = current.transform.position + (current.transform.position - headward.transform.position);
 
-                return CalculateOrientation(headward.transform.position,
-                                            current.transform.position,
-                                            fakeTailPos);
+                //return CalculateOrientation(headward.transform.position,
+                //                            current.transform.position,
+                //                            fakeTailPos);
+
+                return CalculateOrientation(headward.transform.position, currentPos, false);
 
                 break;
 
@@ -167,6 +171,40 @@ public class SnakeGraphicsController : MonoBehaviour
 
             case (false, true, false, true):    // RIGHT-UP
                 return Piece.Orientation.right_down;
+
+            default:
+                return Piece.Orientation.left;
+        }
+    }
+
+    private Piece.Orientation CalculateOrientation(Vector2 otherPos, Vector2 curPos, bool isHead)
+    {
+        bool left = false;
+        bool right = false;
+        bool up = false;
+        bool down = false;
+
+        if (otherPos.x < curPos.x) { left = true; }
+        if (otherPos.x > curPos.x) { right = true; }
+
+        if (otherPos.y > curPos.y) { up = true; }
+        if (otherPos.y < curPos.y) { down = true; }
+
+        // Get orientation from the combination
+        switch (left, right, up, down)
+        {
+            case (true, false, false, false):    // LEFT
+                return isHead ? Piece.Orientation.right : Piece.Orientation.left;
+
+            case (false, true, false, false):    // RIGHT
+                return isHead ? Piece.Orientation.left : Piece.Orientation.right;
+
+            case (false, false, true, false):    // UP
+                return isHead ? Piece.Orientation.down : Piece.Orientation.up;
+
+            case (false, false, false, true):    // DOWN
+                return isHead ? Piece.Orientation.up : Piece.Orientation.down;
+
 
             default:
                 return Piece.Orientation.left;
