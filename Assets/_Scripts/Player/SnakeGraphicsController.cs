@@ -17,7 +17,7 @@ public class SnakeGraphicsController : MonoBehaviour
     #endregion
 
     #region Functions
-    public void UpdateBodypartGraphics(GameObject headward, GameObject current, GameObject tailward, bool rightWard = true)
+    public void UpdateBodypartGraphics(BodyBlock headward, BodyBlock current, BodyBlock tailward, bool rightWard = true)
     {
         // Change the CURRENT graphics to fit the situation
         // depending on the relation to PREVIOUS and NEXT piece
@@ -28,20 +28,62 @@ public class SnakeGraphicsController : MonoBehaviour
         if (headward == null)
         {
             piece.type = Piece.Type.head;
+            current.spriteRenderer.sprite = graphics.head_open;
         }
         else if (tailward == null)
         {
             piece.type = Piece.Type.tail;
+            current.spriteRenderer.sprite = graphics.tail;
         }
         else
         {
-            piece.type = Piece.Type.tail;
+            piece.type = Piece.Type.body;
+            current.spriteRenderer.sprite = graphics.body_straight;
         }
 
         // TODO: Get Orientation + Handle GameObject retrieval properly
+        piece.orientation = GetOrientation(headward, current, tailward);
+
+        Debug.Log("Orientation for: _" + current.name + "_ is " + piece.orientation);
+
+        // Determine the rotation for the piece
+        int rotation = 0;
+        bool turnPiece = false;
+        switch (piece.type, piece.orientation)
+        {
+            // BODY, STRAIGHT
+            case (Piece.Type.body, Piece.Orientation.left): rotation = 0; break;
+            case (Piece.Type.body, Piece.Orientation.right): rotation = 0; break;
+            case (Piece.Type.body, Piece.Orientation.up): rotation = 0; break;
+            case (Piece.Type.body, Piece.Orientation.down): rotation = 0; break;
+
+            // BODY, TURNED (Update graphics too)
+            case (Piece.Type.body, Piece.Orientation.left_up): rotation = 0; turnPiece = true; break;
+            case (Piece.Type.body, Piece.Orientation.left_down): rotation = 0; turnPiece = true; break;
+            case (Piece.Type.body, Piece.Orientation.right_up): rotation = 0; turnPiece = true; break;
+            case (Piece.Type.body, Piece.Orientation.right_down): rotation = 0; turnPiece = true; break;
+
+            // HEAD
+            case (Piece.Type.head, Piece.Orientation.left): rotation = 0; break;
+            case (Piece.Type.head, Piece.Orientation.right): rotation = 0; break;
+            case (Piece.Type.head, Piece.Orientation.up): rotation = 0; break;
+            case (Piece.Type.head, Piece.Orientation.down): rotation = 0; break;
+
+            // TAIL
+            case (Piece.Type.tail, Piece.Orientation.left): rotation = 0; break;
+            case (Piece.Type.tail, Piece.Orientation.right): rotation = 0; break;
+            case (Piece.Type.tail, Piece.Orientation.up): rotation = 0; break;
+            case (Piece.Type.tail, Piece.Orientation.down): rotation = 0; break;
+        }
+
+        // If it was a turning piece, change graphics
+        if (turnPiece) { current.spriteRenderer.sprite = graphics.body_turn; }
+
+        // Rotate the bodypiece graphics
+        //current.
     }
 
-    private Piece.Orientation GetOrientation(GameObject headward, GameObject current, GameObject tailward)
+    private Piece.Orientation GetOrientation(BodyBlock headward, BodyBlock current, BodyBlock tailward)
     {
         Vector2 currentPos = current.gameObject.transform.position;
         Vector2 to_pos;

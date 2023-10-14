@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   head_shut: {fileID: 1236598109, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
   head_open: {fileID: -795578888, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
-  head_body_straight: {fileID: 1875397818, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
-  head_body_turn: {fileID: 704410100, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
+  body_straight: {fileID: 1875397818, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
+  body_turn: {fileID: 704410100, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
   head_tail: {fileID: -362018003, guid: 0009024a885a9f8419a5bca90e056271, type: 3}

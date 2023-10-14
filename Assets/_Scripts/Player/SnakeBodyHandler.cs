@@ -6,14 +6,20 @@ public class SnakeBodyHandler : MonoBehaviour
 {
     #region Properties
     // References
-
+    SnakeGraphicsController graphics;
 
     [SerializeField]
-    List<GameObject> bodyparts = new List<GameObject>();
+    //List<GameObject> bodyparts = new List<GameObject>();
+    List<BodyBlock> bodyparts = new List<BodyBlock>();
 
     #endregion
 
     #region Setup
+    private void Awake()
+    {
+        graphics = GetComponent<SnakeGraphicsController>();
+    }
+
     private void Start()
     {
         // Collect the bodyparts
@@ -26,7 +32,7 @@ public class SnakeBodyHandler : MonoBehaviour
         // Go through all children and store them on the Bodyparts list
         for (int i = 0; i < transform.childCount; i++)
         {
-            bodyparts.Add(transform.GetChild(i).gameObject);
+            bodyparts.Add(transform.GetChild(i).GetComponent<BodyBlock>());
             //Debug.Log("Added bodypart: " + transform.GetChild(i).name);
         }
     }
@@ -43,6 +49,9 @@ public class SnakeBodyHandler : MonoBehaviour
         // Move the head to next position
         bodyparts[0].transform.position += new Vector3(nextCoordinates.x, nextCoordinates.y);
 
+        // Update the graphics
+        //graphics.UpdateBodypartGraphics(null, bodyparts[0], )
+
         // Go through the list of bodyparts and move them along
         for (int i = 1; i < bodyparts.Count; i++)
         {
@@ -52,10 +61,29 @@ public class SnakeBodyHandler : MonoBehaviour
             // Store the previous position for the next bodypart
             prevBodypartPos = bodyparts[i].transform.position;
 
+            
+
             // Move this part forwards
             bodyparts[i].transform.position = nextPos;
 
-            Debug.Log(nextPos);
+        }
+
+        // Update graphics
+        for (int i = 0; i < bodyparts.Count; i++)
+        {
+            // Check type
+            if (i == 0) // HEAD
+            {
+                graphics.UpdateBodypartGraphics(null, bodyparts[0], bodyparts[1]);
+            }
+            else if (i != bodyparts.Count - 1) // BODY
+            {
+                graphics.UpdateBodypartGraphics(bodyparts[i - 1], bodyparts[i], bodyparts[i + 1]);
+            }
+            else // if it is TAIL
+            {
+                graphics.UpdateBodypartGraphics(bodyparts[i - 1], bodyparts[i], null);
+            }
         }
     }
     #endregion

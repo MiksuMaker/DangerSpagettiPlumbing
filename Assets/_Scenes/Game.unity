@@ -247,6 +247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 346893483}
+  - component: {fileID: 346893484}
   m_Layer: 0
   m_Name: BodyPiece (1)
   m_TagString: Untagged
@@ -270,6 +271,20 @@ Transform:
   m_Father: {fileID: 1712552762}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &346893484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346893482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ec305f31934894ea1d6921a9947c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1242398398}
+  graphicsTransform: {fileID: 1242398397}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,6 +412,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 544866920}
+  - component: {fileID: 544866921}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -420,6 +436,20 @@ Transform:
   m_Father: {fileID: 1712552762}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &544866921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544866919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ec305f31934894ea1d6921a9947c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 81535678}
+  graphicsTransform: {fileID: 81535677}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,6 +698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 884073748}
+  - component: {fileID: 884073749}
   m_Layer: 0
   m_Name: BodyPiece
   m_TagString: Untagged
@@ -691,6 +722,20 @@ Transform:
   m_Father: {fileID: 1712552762}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &884073749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884073747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ec305f31934894ea1d6921a9947c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 668346671}
+  graphicsTransform: {fileID: 668346670}
 --- !u!1 &903586614
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,6 +1021,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1711596215}
+  - component: {fileID: 1711596216}
   m_Layer: 0
   m_Name: Tail
   m_TagString: Untagged
@@ -999,6 +1045,20 @@ Transform:
   m_Father: {fileID: 1712552762}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1711596216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711596214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ec305f31934894ea1d6921a9947c47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 903586616}
+  graphicsTransform: {fileID: 903586615}
 --- !u!1 &1712552761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1071,7 @@ GameObject:
   - component: {fileID: 1712552765}
   - component: {fileID: 1712552764}
   - component: {fileID: 1712552763}
+  - component: {fileID: 1712552766}
   m_Layer: 0
   m_Name: Snake
   m_TagString: Untagged
@@ -1074,6 +1135,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 646e3fc3d314f50438bf0ad5e6c5aac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1712552766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712552761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aafdcb415989b34289e59d1124e4a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphics: {fileID: 11400000, guid: c5bf6377b44582e4a8e8f41a16086ea6, type: 2}
 --- !u!1 &1851273162
 GameObject:
   m_ObjectHideFlags: 0
