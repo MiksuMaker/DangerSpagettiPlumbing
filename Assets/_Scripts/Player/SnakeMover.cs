@@ -40,14 +40,14 @@ public class SnakeMover : MonoBehaviour
 
         // Check that nothing is impeding movement
         if (body.interruptableMovementInProgress) { return; }
-        if (TileManager.Instance.IsThereTileAt(curPos + currentMoveDirection)) { return; }
-        if (body.IsThereSnakePieceAt(curPos + currentMoveDirection)) { return; }
+        if (!CheckMovementValidity(curPos + currentMoveDirection)) { return; }
 
 
         // Move forwards
         body.MoveSnakeBody(currentMoveDirection);
 
-        //body.CalculateFallDistance();
+        // Check gravity
+        body.CalculateFallDistance();
     }
 
     private void HandleBufferMovement()
