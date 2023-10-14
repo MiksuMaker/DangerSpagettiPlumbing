@@ -26,6 +26,7 @@ public class SnakeBodyHandler : MonoBehaviour
     {
         // Collect the bodyparts
         UpdateBodyparts();
+        SaveStartPositions();
     }
 
     [ContextMenu("Get Bodyparts")]

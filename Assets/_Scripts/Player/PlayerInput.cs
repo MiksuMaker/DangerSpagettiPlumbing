@@ -5,15 +5,20 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     #region Properties
+    // References
+    SnakeController controller;
+
+    // Events
+    public delegate void ResetGame();
+    public event ResetGame resetGame;
+
     // Controls
     KeyCode up = KeyCode.W;
     KeyCode left = KeyCode.A;
     KeyCode down = KeyCode.S;
     KeyCode right = KeyCode.D;
 
-    // References
-    SnakeController controller;
-
+    KeyCode restart = KeyCode.R;
     // Inputs
     Vector2 mostRecentMovementInput;
     #endregion
@@ -31,6 +36,7 @@ public class PlayerInput : MonoBehaviour
     {
         // Listen for inputs
         HandleMovementInputs();
+        HandleDebugControls();
     }
 
     private void HandleMovementInputs()
@@ -46,6 +52,14 @@ public class PlayerInput : MonoBehaviour
         if (mostRecentMovementInput != Vector2.zero)
         {
             controller.UpdateMovementDirection(mostRecentMovementInput);
+        }
+    }
+
+    private void HandleDebugControls()
+    {
+        if (Input.GetKeyDown(restart))
+        {
+            resetGame?.Invoke();
         }
     }
     #endregion

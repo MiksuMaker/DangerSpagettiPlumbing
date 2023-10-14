@@ -16,6 +16,12 @@ public class SnakeMover : MonoBehaviour
     {
         body = GetComponent<SnakeBodyHandler>();
     }
+
+    private void Start()
+    {
+        // Subscribe to delegates
+        FindObjectOfType<PlayerInput>().resetGame += ResetSnake;
+    }
     #endregion
 
     #region Functions
@@ -41,6 +47,11 @@ public class SnakeMover : MonoBehaviour
         body.MoveSnakeBody(currentMoveDirection);
 
         body.DropSnake();
+    }
+
+    public void ResetSnake()
+    {
+        body.ReturnToStartPositions();
     }
     #endregion
 }
