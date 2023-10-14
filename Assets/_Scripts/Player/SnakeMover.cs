@@ -39,6 +39,8 @@ public class SnakeMover : MonoBehaviour
         currentMoveDirection = newDirection;
 
         body.MoveSnakeBody(currentMoveDirection);
+
+        body.DropSnake();
     }
     #endregion
 }

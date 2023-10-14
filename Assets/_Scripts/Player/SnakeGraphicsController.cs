@@ -16,7 +16,7 @@ public class SnakeGraphicsController : MonoBehaviour
 
     #endregion
 
-    #region Functions
+    #region Update Bodyparts
     public void UpdateBodypartGraphics(BodyBlock headward, BodyBlock current, BodyBlock tailward, bool rightWard = true)
     {
         // Change the CURRENT graphics to fit the situation
