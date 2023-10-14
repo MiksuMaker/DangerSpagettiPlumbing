@@ -48,6 +48,8 @@ public class SnakeGraphicsController : MonoBehaviour
 
         // Determine the rotation for the piece
         int rotation = 0;
+        int scaleX = 1;
+        int scaleY = 1;
         bool turnPiece = false;
         switch (piece.type, piece.orientation)
         {
@@ -64,10 +66,10 @@ public class SnakeGraphicsController : MonoBehaviour
             case (Piece.Type.body, Piece.Orientation.right_down): rotation = 180; turnPiece = true; break;
 
             // HEAD
-            case (Piece.Type.head, Piece.Orientation.left): rotation = 180; break;
-            case (Piece.Type.head, Piece.Orientation.right): rotation = 0; break;
-            case (Piece.Type.head, Piece.Orientation.up): rotation = 90; break;
-            case (Piece.Type.head, Piece.Orientation.down): rotation = -90; break;
+            case (Piece.Type.head, Piece.Orientation.left): rotation = 180; scaleY = CalcScale(rightWard); break;
+            case (Piece.Type.head, Piece.Orientation.right): rotation = 0; scaleY = CalcScale(rightWard); break;
+            case (Piece.Type.head, Piece.Orientation.up): rotation = 90; scaleY = CalcScale(rightWard); break;
+            case (Piece.Type.head, Piece.Orientation.down): rotation = -90; scaleY = CalcScale(rightWard); break;
 
             // TAIL
             case (Piece.Type.tail, Piece.Orientation.left): rotation = 180; break;
@@ -81,6 +83,7 @@ public class SnakeGraphicsController : MonoBehaviour
 
         // Rotate the bodypiece graphics
         current.graphicsTransform.rotation = Quaternion.Euler(0f, 0f, rotation);
+        current.graphicsTransform.localScale = new Vector3(scaleX, scaleY, 1f);
     }
 
     private Piece.Orientation GetOrientation(BodyBlock headward, BodyBlock current, BodyBlock tailward)
@@ -209,6 +212,15 @@ public class SnakeGraphicsController : MonoBehaviour
             default:
                 return Piece.Orientation.left;
         }
+    }
+    #endregion
+
+    #region Helpers
+    private int CalcScale(bool rightwards)
+    {
+        if (rightwards) { return 1; }
+        // Else
+        return -1;
     }
     #endregion
 }

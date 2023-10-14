@@ -12,6 +12,7 @@ public class SnakeBodyHandler : MonoBehaviour
     //List<GameObject> bodyparts = new List<GameObject>();
     List<BodyBlock> bodyparts = new List<BodyBlock>();
 
+    bool lastMoveDirectionIsRight = true;
     #endregion
 
     #region Setup
@@ -41,6 +42,8 @@ public class SnakeBodyHandler : MonoBehaviour
     #region Functions
     public void MoveSnakeBody(Vector2 nextCoordinates)
     {
+        UpdateMoveDirection(nextCoordinates.x);
+
         Vector2 prevBodypartPos;
         Vector2 nextPos;
 
@@ -48,9 +51,6 @@ public class SnakeBodyHandler : MonoBehaviour
 
         // Move the head to next position
         bodyparts[0].transform.position += new Vector3(nextCoordinates.x, nextCoordinates.y);
-
-        // Update the graphics
-        //graphics.UpdateBodypartGraphics(null, bodyparts[0], )
 
         // Go through the list of bodyparts and move them along
         for (int i = 1; i < bodyparts.Count; i++)
@@ -60,8 +60,6 @@ public class SnakeBodyHandler : MonoBehaviour
 
             // Store the previous position for the next bodypart
             prevBodypartPos = bodyparts[i].transform.position;
-
-            
 
             // Move this part forwards
             bodyparts[i].transform.position = nextPos;
@@ -74,16 +72,28 @@ public class SnakeBodyHandler : MonoBehaviour
             // Check type
             if (i == 0) // HEAD
             {
-                graphics.UpdateBodypartGraphics(null, bodyparts[0], bodyparts[1]);
+                graphics.UpdateBodypartGraphics(null, bodyparts[0], bodyparts[1], lastMoveDirectionIsRight);
             }
             else if (i != bodyparts.Count - 1) // BODY
             {
-                graphics.UpdateBodypartGraphics(bodyparts[i - 1], bodyparts[i], bodyparts[i + 1]);
+                graphics.UpdateBodypartGraphics(bodyparts[i - 1], bodyparts[i], bodyparts[i + 1], lastMoveDirectionIsRight);
             }
             else // if it is TAIL
             {
-                graphics.UpdateBodypartGraphics(bodyparts[i - 1], bodyparts[i], null);
+                graphics.UpdateBodypartGraphics(bodyparts[i - 1], bodyparts[i], null, lastMoveDirectionIsRight);
             }
+        }
+    }
+
+    private void UpdateMoveDirection(float xInput)
+    {
+        if (xInput < 0)
+        {
+            lastMoveDirectionIsRight = false;
+        }
+        else if (xInput > 0)
+        {
+            lastMoveDirectionIsRight = true;
         }
     }
     #endregion
