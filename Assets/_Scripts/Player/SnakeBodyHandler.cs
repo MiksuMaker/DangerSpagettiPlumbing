@@ -190,7 +190,7 @@ public class SnakeBodyHandler : MonoBehaviour
 
     IEnumerator DropperCoroutine(int fallDistance)
     {
-        interruptableMovementInProgress = true;
+        PauseMovement();
 
         Vector3 fall = Vector3.down * fallDistance;
 
@@ -230,7 +230,19 @@ public class SnakeBodyHandler : MonoBehaviour
                 instructions[i].Item3;
         }
 
+        ResumeMovement();
+    }
+
+    private void PauseMovement()
+    {
+        interruptableMovementInProgress = true;
+        MovementManager.Instance.pauseMovementTick();
+    }
+
+    private void ResumeMovement()
+    {
         interruptableMovementInProgress = false;
+        MovementManager.Instance.resumeMovementTick();
     }
     #endregion
 }

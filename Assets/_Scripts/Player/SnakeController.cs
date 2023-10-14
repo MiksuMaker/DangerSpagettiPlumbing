@@ -19,7 +19,11 @@ public class SnakeController : MonoBehaviour
     #region Functions
     public void UpdateMovementDirection(Vector2 newDirection)
     {
+        // Update movement direction
         mover.TryUpdateMovementDirection(newDirection);
+
+        // Manual movement
+        //mover.DoMove();
     }
     #endregion
 }

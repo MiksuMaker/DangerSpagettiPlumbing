@@ -21,10 +21,21 @@ public class SnakeMover : MonoBehaviour
     {
         // Subscribe to delegates
         FindObjectOfType<PlayerInput>().resetGame += ResetSnake;
+        MovementManager.Instance.movementTick += DoMove;
     }
     #endregion
 
     #region Functions
+    public void DoMove()
+    {
+        // Move forwards
+        if (body.interruptableMovementInProgress) { return; }
+
+        body.MoveSnakeBody(currentMoveDirection);
+
+        body.CalculateFallDistance();
+    }
+
     public void TryUpdateMovementDirection(Vector2 newDirection)
     {
         // Check if movement direction is valid
@@ -42,16 +53,10 @@ public class SnakeMover : MonoBehaviour
             return;
         }
 
-        if (body.interruptableMovementInProgress)
-        {
-            return;
-        }
-
         currentMoveDirection = newDirection;
 
-        body.MoveSnakeBody(currentMoveDirection);
-
-        body.CalculateFallDistance();
+        // Manual movement
+        DoMove();
     }
 
     public void ResetSnake()
