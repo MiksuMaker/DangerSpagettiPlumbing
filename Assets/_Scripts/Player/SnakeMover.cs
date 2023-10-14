@@ -29,6 +29,13 @@ public class SnakeMover : MonoBehaviour
             return;
         }
 
+        if (body.IsThereSnakePieceAt(body.GetCurrentCoordinates() 
+                                                    + newDirection))
+        {
+            // Snake piece is on the way
+            return;
+        }
+
         currentMoveDirection = newDirection;
 
         body.MoveSnakeBody(currentMoveDirection);

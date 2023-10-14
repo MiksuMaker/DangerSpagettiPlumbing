@@ -111,29 +111,13 @@ public class SnakeGraphicsController : MonoBehaviour
 
             case (true, false): // Bodypiece is HEAD
 
-                //Vector2 fakeHeadPos = current.transform.position + (current.transform.position - tailward.transform.position);
-
-                //return CalculateOrientation(fakeHeadPos,
-                //                            current.transform.position,
-                //                            tailward.transform.position);
-
                 return CalculateOrientation(tailward.transform.position, currentPos, true);
-
-                break;
 
             case (false, true): // Bodypiece is TAILS
 
-                //Vector2 fakeTailPos = current.transform.position + (current.transform.position - headward.transform.position);
-
-                //return CalculateOrientation(headward.transform.position,
-                //                            current.transform.position,
-                //                            fakeTailPos);
-
                 return CalculateOrientation(headward.transform.position, currentPos, false);
 
-                break;
-
-            default: return Piece.Orientation.left; 
+            default: return Piece.Orientation.left; // Default
         }
     }
 

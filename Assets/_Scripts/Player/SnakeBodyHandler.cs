@@ -101,5 +101,19 @@ public class SnakeBodyHandler : MonoBehaviour
     {
         return bodyparts[0].transform.position;
     }
+
+    public bool IsThereSnakePieceAt(Vector2 coordinates)
+    {
+        // Check through all body parts if they are on the way
+        for (int i = 0; i < bodyparts.Count; i++)
+        {
+            if (bodyparts[i].transform.position == (Vector3)coordinates)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
     #endregion
 }
