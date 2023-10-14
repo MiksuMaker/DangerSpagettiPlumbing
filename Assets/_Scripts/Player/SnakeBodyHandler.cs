@@ -18,6 +18,8 @@ public class SnakeBodyHandler : MonoBehaviour
     [SerializeField] float dropTime = 0.5f;
 
     [HideInInspector] public bool interruptableMovementInProgress = false;
+
+    IEnumerator snakeDropper;
     #endregion
 
     #region Setup
@@ -54,6 +56,10 @@ public class SnakeBodyHandler : MonoBehaviour
 
     public void ReturnToStartPositions()
     {
+        // Stop falling
+        if (snakeDropper != null)
+        { StopCoroutine(snakeDropper); }
+
         // Delete extra blocks?
 
         // Reset the blocks to starting positions
@@ -66,7 +72,7 @@ public class SnakeBodyHandler : MonoBehaviour
     }
     #endregion
 
-    #region Functions
+    #region Moving
     public void MoveSnakeBody(Vector2 nextCoordinates)
     {
         UpdateMoveDirection(nextCoordinates.x);
@@ -148,7 +154,9 @@ public class SnakeBodyHandler : MonoBehaviour
 
         return false;
     }
+    #endregion
 
+    #region Dropping
     public bool CheckAreThereTilesUnderSnake(int heightModifier = 0)
     {
         // Check if there is any ground tile supporting the snake body
@@ -195,7 +203,8 @@ public class SnakeBodyHandler : MonoBehaviour
     public void DropSnakeDown(int fallDistance)
     {
         //
-        StartCoroutine(DropperCoroutine(fallDistance));
+        snakeDropper = DropperCoroutine(fallDistance);
+        StartCoroutine(snakeDropper);
     }
 
     IEnumerator DropperCoroutine(int fallDistance)

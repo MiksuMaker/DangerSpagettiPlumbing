@@ -8,6 +8,7 @@ public class SnakeMover : MonoBehaviour
     // References
     SnakeBodyHandler body;
 
+    Vector2 ORIGINALMoveDirection = Vector2.right;
     Vector2 currentMoveDirection = Vector2.right;
     #endregion
 
@@ -56,7 +57,7 @@ public class SnakeMover : MonoBehaviour
         currentMoveDirection = newDirection;
 
         // Manual movement
-        DoMove();
+        //DoMove();
 
 
     }
@@ -86,6 +87,7 @@ public class SnakeMover : MonoBehaviour
 
     public void ResetSnake()
     {
+        currentMoveDirection = ORIGINALMoveDirection;
         body.ReturnToStartPositions();
     }
     #endregion
