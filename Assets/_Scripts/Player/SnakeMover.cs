@@ -10,6 +10,9 @@ public class SnakeMover : MonoBehaviour
 
     Vector2 ORIGINALMoveDirection = Vector2.right;
     Vector2 currentMoveDirection = Vector2.right;
+
+    Vector2 bufferMoveDirection = Vector2.zero;
+    bool freshBuffer = false;
     #endregion
 
     #region Setup
@@ -29,6 +32,8 @@ public class SnakeMover : MonoBehaviour
     #region Functions
     public void DoMove()
     {
+        HandleBufferMovement();
+
         Vector2 curPos = body.GetCurrentCoordinates();
 
         // Check that nothing is impeding movement
@@ -44,27 +49,66 @@ public class SnakeMover : MonoBehaviour
         body.CalculateFallDistance();
     }
 
+    private void HandleBufferMovement()
+    {
+        // Check if there is buffer move input
+        if (bufferMoveDirection != Vector2.zero)
+        {
+            // Check if it was made just now
+            if (freshBuffer)
+            {
+                // If it is too fresh, wait it out
+                freshBuffer = false;
+            }
+            else
+            {
+                currentMoveDirection = bufferMoveDirection;
+                bufferMoveDirection = Vector2.zero;
+            }
+        }
+    }
+
     public void TryUpdateMovementDirection(Vector2 newDirection)
     {
         // Check if movement direction is valid
-        if (TileManager.Instance.IsThereTileAt(body.GetCurrentCoordinates() + newDirection))
-        {
-            // Blocked movement!
-            return;
-        }
+        bool validMovement = true;
+        Vector2 curPos = body.GetCurrentCoordinates();
+        validMovement = CheckMovementValidity(curPos + newDirection);
 
-        if (body.IsThereSnakePieceAt(body.GetCurrentCoordinates() + newDirection))
+        // If the the new direction is valid for movement, change course
+        if (validMovement)
         {
-            // Snake piece is on the way
-            return;
+            currentMoveDirection = newDirection;
+            // Nullify buffered inputs
+            bufferMoveDirection = Vector2.zero;
         }
-
-        currentMoveDirection = newDirection;
+        else
+        {
+            // Second, check if the input would be valid for one tile further
+            if (CheckMovementValidity(curPos + currentMoveDirection + newDirection))
+            {
+                // --> if so, stash it into the buffer
+                bufferMoveDirection = newDirection;
+                freshBuffer = true;
+            }
+        }
 
         // Manual movement
         //DoMove();
 
 
+    }
+    private bool CheckMovementValidity(Vector2 pos)
+    {
+        if (TileManager.Instance.IsThereTileAt(pos))
+        {
+            return false;
+        }
+        else if (body.IsThereSnakePieceAt(pos))
+        {
+            return false;
+        }
+        return true;
     }
     #endregion
 
