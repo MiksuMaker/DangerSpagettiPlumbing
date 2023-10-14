@@ -217,6 +217,7 @@ public class SnakeGraphicsController : MonoBehaviour
         snakeColor = newColor;
     }
 
+    [ContextMenu("Update Colors")]
     private void UpdateColors()
     {
         if (snakeColor == currentSnakeColor) { return; }

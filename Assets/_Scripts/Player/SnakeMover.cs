@@ -34,6 +34,8 @@ public class SnakeMover : MonoBehaviour
     {
         HandleBufferMovement();
 
+        DoEdibleCheck();
+
         Vector2 curPos = body.GetCurrentCoordinates();
 
         // Check that nothing is impeding movement
@@ -41,12 +43,11 @@ public class SnakeMover : MonoBehaviour
         if (TileManager.Instance.IsThereTileAt(curPos + currentMoveDirection)) { return; }
         if (body.IsThereSnakePieceAt(curPos + currentMoveDirection)) { return; }
 
+
         // Move forwards
         body.MoveSnakeBody(currentMoveDirection);
 
-        DoEdibleCheck();
-
-        body.CalculateFallDistance();
+        //body.CalculateFallDistance();
     }
 
     private void HandleBufferMovement()
