@@ -28,7 +28,7 @@ public class SnakeGraphicsController : MonoBehaviour
         if (headward == null)
         {
             piece.type = Piece.Type.head;
-            current.spriteRenderer.sprite = graphics.head_open;
+            //current.spriteRenderer.sprite = graphics.head_open;
         }
         else if (tailward == null)
         {
@@ -200,6 +200,12 @@ public class SnakeGraphicsController : MonoBehaviour
     #endregion
 
     #region Helpers
+    public void OpenMouth(BodyBlock head, bool open)
+    {
+        if (open) { head.spriteRenderer.sprite = graphics.head_open; }
+        else { head.spriteRenderer.sprite = graphics.head_shut; }
+    }
+
     private int CalcScale(bool rightwards)
     {
         if (rightwards) { return 1; }

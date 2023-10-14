@@ -12,6 +12,8 @@ public class SnakeBodyHandler : MonoBehaviour
     List<(BodyBlock, Vector2)> startPositions = new List<(BodyBlock, Vector2)>();
 
     bool lastMoveDirectionIsRight = true;
+    [HideInInspector]
+    public bool openMouth = false;
 
     [SerializeField] float dropTime = 0.5f;
 
@@ -103,6 +105,7 @@ public class SnakeBodyHandler : MonoBehaviour
             if (i == 0) // HEAD
             {
                 graphics.UpdateBodypartGraphics(null, bodyparts[0], bodyparts[1], lastMoveDirectionIsRight);
+                graphics.OpenMouth(bodyparts[0], openMouth);
             }
             else if (i != bodyparts.Count - 1) // BODY
             {

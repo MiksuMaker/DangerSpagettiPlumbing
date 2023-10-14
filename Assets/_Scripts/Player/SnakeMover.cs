@@ -33,21 +33,21 @@ public class SnakeMover : MonoBehaviour
 
         body.MoveSnakeBody(currentMoveDirection);
 
+        DoEdibleCheck();
+
         body.CalculateFallDistance();
     }
 
     public void TryUpdateMovementDirection(Vector2 newDirection)
     {
         // Check if movement direction is valid
-        if (TileManager.Instance.IsThereTileAt(body.GetCurrentCoordinates() 
-                                                    + newDirection))
+        if (TileManager.Instance.IsThereTileAt(body.GetCurrentCoordinates() + newDirection))
         {
             // Blocked movement!
             return;
         }
 
-        if (body.IsThereSnakePieceAt(body.GetCurrentCoordinates() 
-                                                    + newDirection))
+        if (body.IsThereSnakePieceAt(body.GetCurrentCoordinates() + newDirection))
         {
             // Snake piece is on the way
             return;
@@ -57,6 +57,31 @@ public class SnakeMover : MonoBehaviour
 
         // Manual movement
         DoMove();
+
+
+    }
+
+    private void DoEdibleCheck()
+    {
+        Vector2 curPos = body.GetCurrentCoordinates();
+
+        // Check if on top of any edibles
+        if (CheckPosForEdibles(curPos))
+        {
+            // Eat them
+            EdibleManager.Instance.EatEdibleAtPos(curPos);
+        }
+
+        // Check for edibles in front of the snake
+        if (CheckPosForEdibles(curPos + currentMoveDirection * 2f))
+        { body.openMouth = true; } // Open mouth
+        else
+        { body.openMouth = false; } // Close mouth
+    }
+
+    private bool CheckPosForEdibles(Vector2 checkPos)
+    {
+        return EdibleManager.Instance.CheckPositionForEdibles(checkPos);
     }
 
     public void ResetSnake()

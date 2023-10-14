@@ -28,14 +28,23 @@ public class EdibleManager : MonoSingleton<EdibleManager>
         {
             if (edibles[i].transform.position == (Vector3)pos)
             {
-                // Get eaten
-                edibles[i].GetEaten();
-
                 return true;
             }
         }
 
         return false;
+    }
+
+    public void EatEdibleAtPos(Vector2 pos)
+    {
+        for (int i = 0; i < edibles.Count; i++)
+        {
+            if (edibles[i].transform.position == (Vector3)pos)
+            {
+                edibles[i].GetEaten();
+                break;
+            }
+        }
     }
     #endregion
 }
