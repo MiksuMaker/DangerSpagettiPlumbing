@@ -29,9 +29,11 @@ public class SnakeMover : MonoBehaviour
     #region Functions
     public void DoMove()
     {
-        // Move forwards
+        // Check that nothing is impeding movement
         if (body.interruptableMovementInProgress) { return; }
+        if (TileManager.Instance.IsThereTileAt(body.GetCurrentCoordinates() + currentMoveDirection)) { return; }
 
+        // Move forwards
         body.MoveSnakeBody(currentMoveDirection);
 
         DoEdibleCheck();

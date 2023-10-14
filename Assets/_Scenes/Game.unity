@@ -1188,7 +1188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementFrequency: 0.5
-  pausedMovement: 1
+  pausedMovement: 0
   automaticMovementOn: 1
 --- !u!1 &1586112348
 GameObject:
