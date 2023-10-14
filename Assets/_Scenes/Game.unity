@@ -197,7 +197,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -795578888, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
-  m_Color: {r: 1, g: 0.9198113, b: 0.99365044, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -944,7 +944,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -362018003, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
-  m_Color: {r: 1, g: 0.9198113, b: 0.99365044, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1104,7 +1104,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1875397818, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
-  m_Color: {r: 1, g: 0.9198113, b: 0.99365044, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1188,7 +1188,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1875397818, guid: 0009024a885a9f8419a5bca90e056271, type: 3}
-  m_Color: {r: 1, g: 0.9198113, b: 0.99365044, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1464,7 +1464,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graphics: {fileID: 11400000, guid: c5bf6377b44582e4a8e8f41a16086ea6, type: 2}
-  snakeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  snakeColor: {r: 0.8679245, g: 0.5690637, b: 0.5690637, a: 1}
+  secondarySnakeColor: {r: 0.8396226, g: 0.52674437, b: 0.52674437, a: 1}
 --- !u!1 &1769330710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,6 +2363,18 @@ PrefabInstance:
     - target: {fileID: 3146663554084440166, guid: 17118c5e74ddacf4288b26f2ddc30001, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3146663554400699485, guid: 17118c5e74ddacf4288b26f2ddc30001, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3146663554400699485, guid: 17118c5e74ddacf4288b26f2ddc30001, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3146663554400699485, guid: 17118c5e74ddacf4288b26f2ddc30001, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17118c5e74ddacf4288b26f2ddc30001, type: 3}

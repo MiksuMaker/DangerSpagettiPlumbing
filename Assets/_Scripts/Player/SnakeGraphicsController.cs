@@ -11,15 +11,18 @@ public class SnakeGraphicsController : MonoBehaviour
     [SerializeField]
     SnakeGraphicsCollection graphics;
 
-    [SerializeField]
-    public Color snakeColor = Color.gray;
+    [SerializeField] public Color snakeColor = Color.gray;
+    [SerializeField] public Color secondarySnakeColor = Color.gray;
     Color currentSnakeColor = Color.gray;
     #endregion
 
     #region Setup
     private void Start()
     {
-        body = GetComponent<SnakeBodyHandler>();    
+        body = GetComponent<SnakeBodyHandler>();
+
+        ChangeColor(snakeColor);
+        UpdateColors();
     }
 
     //private void Update()
@@ -218,14 +221,17 @@ public class SnakeGraphicsController : MonoBehaviour
     }
 
     [ContextMenu("Update Colors")]
-    private void UpdateColors()
+    public void UpdateColors(bool overrideSameCheck = true)
     {
-        if (snakeColor == currentSnakeColor) { return; }
+        if (!overrideSameCheck && snakeColor == currentSnakeColor) { return; }
         currentSnakeColor = snakeColor;
 
-        foreach (var b in body.GetBodyBlocks())
+        //foreach (var b in body.GetBodyBlocks())
+        List<BodyBlock> b = body.GetBodyBlocks();
+        for (int i = 0; i < b.Count; i++)
         {
-            b.spriteRenderer.color = currentSnakeColor;
+            //b[i].spriteRenderer.color = currentSnakeColor;
+            b[i].spriteRenderer.color = (i % 2 == 0) ? secondarySnakeColor : snakeColor;
         }
     }
     #endregion
@@ -256,7 +262,7 @@ public struct Piece
     {
         up, left, down, right,
 
-        left_up, right_up, left_down, right_down,  
+        left_up, right_up, left_down, right_down,
     }
 
     public enum Type

@@ -177,10 +177,11 @@ public class SnakeBodyHandler : MonoBehaviour
 
         // Arrange it to the right position
         bodyparts.Insert(1, b);
-
         b.transform.position = newGrowthPos;
-
         growthNeeded--;
+
+        // Update their color
+        graphics.UpdateColors();
     }
     #endregion
 
