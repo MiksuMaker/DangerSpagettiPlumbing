@@ -29,9 +29,12 @@ public class SnakeMover : MonoBehaviour
     #region Functions
     public void DoMove()
     {
+        Vector2 curPos = body.GetCurrentCoordinates();
+
         // Check that nothing is impeding movement
         if (body.interruptableMovementInProgress) { return; }
-        if (TileManager.Instance.IsThereTileAt(body.GetCurrentCoordinates() + currentMoveDirection)) { return; }
+        if (TileManager.Instance.IsThereTileAt(curPos + currentMoveDirection)) { return; }
+        if (body.IsThereSnakePieceAt(curPos + currentMoveDirection)) { return; }
 
         // Move forwards
         body.MoveSnakeBody(currentMoveDirection);
@@ -63,7 +66,9 @@ public class SnakeMover : MonoBehaviour
 
 
     }
+    #endregion
 
+    #region Edibles
     private void DoEdibleCheck()
     {
         Vector2 curPos = body.GetCurrentCoordinates();
@@ -73,6 +78,7 @@ public class SnakeMover : MonoBehaviour
         {
             // Eat them
             EdibleManager.Instance.EatEdibleAtPos(curPos);
+            body.RegisterGrowth();
         }
 
         // Check for edibles in front of the snake
@@ -86,7 +92,9 @@ public class SnakeMover : MonoBehaviour
     {
         return EdibleManager.Instance.CheckPositionForEdibles(checkPos);
     }
+    #endregion
 
+    #region Helpers
     public void ResetSnake()
     {
         currentMoveDirection = ORIGINALMoveDirection;

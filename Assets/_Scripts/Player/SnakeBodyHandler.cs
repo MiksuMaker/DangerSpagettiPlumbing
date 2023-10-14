@@ -10,14 +10,14 @@ public class SnakeBodyHandler : MonoBehaviour
 
     List<BodyBlock> bodyparts = new List<BodyBlock>();
     List<(BodyBlock, Vector2)> startPositions = new List<(BodyBlock, Vector2)>();
+    int growthNeeded = 0;
 
     bool lastMoveDirectionIsRight = true;
-    [HideInInspector]
-    public bool openMouth = false;
 
-    [SerializeField] float dropTime = 0.5f;
 
+    [HideInInspector] public bool openMouth = false;
     [HideInInspector] public bool interruptableMovementInProgress = false;
+    [SerializeField] float dropTime = 0.5f;
 
     IEnumerator snakeDropper;
     #endregion
@@ -42,7 +42,6 @@ public class SnakeBodyHandler : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             bodyparts.Add(transform.GetChild(i).GetComponent<BodyBlock>());
-            //Debug.Log("Added bodypart: " + transform.GetChild(i).name);
         }
     }
 
@@ -85,18 +84,22 @@ public class SnakeBodyHandler : MonoBehaviour
         // Move the head to next position
         bodyparts[0].transform.position += new Vector3(nextCoordinates.x, nextCoordinates.y);
 
-        // Go through the list of bodyparts and move them along
-        for (int i = 1; i < bodyparts.Count; i++)
+        // Check the need for growth
+        if (growthNeeded != 0) { HandleGrowth(prevBodypartPos); }
+        else
         {
-            // Get the next Position
-            nextPos = prevBodypartPos;
+            // Go through the list of bodyparts and move them along
+            for (int i = 1; i < bodyparts.Count; i++)
+            {
+                // Get the next Position
+                nextPos = prevBodypartPos;
 
-            // Store the previous position for the next bodypart
-            prevBodypartPos = bodyparts[i].transform.position;
+                // Store the previous position for the next bodypart
+                prevBodypartPos = bodyparts[i].transform.position;
 
-            // Move this part forwards
-            bodyparts[i].transform.position = nextPos;
-
+                // Move this part forwards
+                bodyparts[i].transform.position = nextPos;
+            }
         }
 
         // Update graphics
@@ -153,6 +156,26 @@ public class SnakeBodyHandler : MonoBehaviour
         }
 
         return false;
+    }
+    #endregion
+
+    #region Growing
+    public void RegisterGrowth(int growthAmount = 1)
+    {
+        growthNeeded += growthAmount;
+    }
+
+    private void HandleGrowth(Vector2 newGrowthPos)
+    {
+        // Add another piece to the snake
+        BodyBlock b = (Instantiate(Resources.Load("Snake/BodyPiece"), transform) as GameObject).GetComponent<BodyBlock>();
+
+        // Arrange it to the right position
+        bodyparts.Insert(1, b);
+
+        b.transform.position = newGrowthPos;
+
+        growthNeeded--;
     }
     #endregion
 
@@ -235,7 +258,7 @@ public class SnakeBodyHandler : MonoBehaviour
             // Calculate the current fall positions
             for (int i = 0; i < instructions.Count; i++)
             {
-                instructions[i].Item1.transform.position = 
+                instructions[i].Item1.transform.position =
                     Vector3.Lerp(instructions[i].Item2,
                                  instructions[i].Item3,
                                  t);
@@ -262,6 +285,13 @@ public class SnakeBodyHandler : MonoBehaviour
     {
         interruptableMovementInProgress = false;
         MovementManager.Instance.resumeMovementTick();
+    }
+    #endregion
+
+    #region Helpers
+    public List<BodyBlock> GetBodyBlocks()
+    {
+        return bodyparts;
     }
     #endregion
 }

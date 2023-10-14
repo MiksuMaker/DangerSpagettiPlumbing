@@ -6,14 +6,26 @@ using UnityEngine;
 public class SnakeGraphicsController : MonoBehaviour
 {
     #region Properties
+    SnakeBodyHandler body;
+
     [SerializeField]
     SnakeGraphicsCollection graphics;
 
-    
+    [SerializeField]
+    public Color snakeColor = Color.gray;
+    Color currentSnakeColor = Color.gray;
     #endregion
 
     #region Setup
+    private void Start()
+    {
+        body = GetComponent<SnakeBodyHandler>();    
+    }
 
+    //private void Update()
+    //{
+    //    UpdateColors();
+    //}
     #endregion
 
     #region Update Bodyparts
@@ -199,7 +211,26 @@ public class SnakeGraphicsController : MonoBehaviour
     }
     #endregion
 
+    #region Colors
+    public void ChangeColor(Color newColor)
+    {
+        snakeColor = newColor;
+    }
+
+    private void UpdateColors()
+    {
+        if (snakeColor == currentSnakeColor) { return; }
+        currentSnakeColor = snakeColor;
+
+        foreach (var b in body.GetBodyBlocks())
+        {
+            b.spriteRenderer.color = currentSnakeColor;
+        }
+    }
+    #endregion
+
     #region Helpers
+
     public void OpenMouth(BodyBlock head, bool open)
     {
         if (open) { head.spriteRenderer.sprite = graphics.head_open; }
