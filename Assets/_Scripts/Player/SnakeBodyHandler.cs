@@ -14,6 +14,8 @@ public class SnakeBodyHandler : MonoBehaviour
     bool lastMoveDirectionIsRight = true;
 
     [SerializeField] float dropTime = 0.5f;
+
+    [HideInInspector] public bool interruptableMovementInProgress = false;
     #endregion
 
     #region Setup
@@ -155,7 +157,7 @@ public class SnakeBodyHandler : MonoBehaviour
         return false;
     }
 
-    public void DropSnake()
+    public void CalculateFallDistance()
     {
         // There is no ground tiles beneath the snake - time to drop them
 
@@ -174,8 +176,6 @@ public class SnakeBodyHandler : MonoBehaviour
         // Drop the snake for the FallDistance
         if (fallDistance > 0)
         {
-            Debug.Log("Fall distance: " + fallDistance);
-
             // Drop the snake bits for that distance
             DropSnakeDown(fallDistance);
         }
@@ -190,6 +190,8 @@ public class SnakeBodyHandler : MonoBehaviour
 
     IEnumerator DropperCoroutine(int fallDistance)
     {
+        interruptableMovementInProgress = true;
+
         Vector3 fall = Vector3.down * fallDistance;
 
         // Pack the BodyBlocks in the tuple
@@ -228,6 +230,7 @@ public class SnakeBodyHandler : MonoBehaviour
                 instructions[i].Item3;
         }
 
+        interruptableMovementInProgress = false;
     }
     #endregion
 }

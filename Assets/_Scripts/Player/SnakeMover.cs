@@ -42,11 +42,16 @@ public class SnakeMover : MonoBehaviour
             return;
         }
 
+        if (body.interruptableMovementInProgress)
+        {
+            return;
+        }
+
         currentMoveDirection = newDirection;
 
         body.MoveSnakeBody(currentMoveDirection);
 
-        body.DropSnake();
+        body.CalculateFallDistance();
     }
 
     public void ResetSnake()
