@@ -59,6 +59,8 @@ public class SnakeBodyHandler : MonoBehaviour
         {
             bodyparts[i].transform.position = startPositions[i].Item2;
         }
+
+        UpdateGraphics();
     }
     #endregion
 
@@ -90,6 +92,11 @@ public class SnakeBodyHandler : MonoBehaviour
         }
 
         // Update graphics
+        UpdateGraphics();
+    }
+
+    private void UpdateGraphics()
+    {
         for (int i = 0; i < bodyparts.Count; i++)
         {
             // Check type
