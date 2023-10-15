@@ -8,6 +8,8 @@ public class SnakeBodyHandler : MonoBehaviour
     // References
     SnakeGraphicsController graphics;
 
+    [SerializeField, Range(3, 5)] int startingBodyBlocksAmount = 4;
+
     List<BodyBlock> bodyparts = new List<BodyBlock>();
     List<(BodyBlock, Vector2)> startPositions = new List<(BodyBlock, Vector2)>();
     int lengthAlterationAmount = 0;
@@ -32,6 +34,9 @@ public class SnakeBodyHandler : MonoBehaviour
     {
         // Collect the bodyparts
         UpdateBodyparts();
+        // Add/decrease bodyparts
+        SetupStartBody();
+        // Save Bodypart positions
         SaveStartPositions();
     }
 
@@ -42,6 +47,14 @@ public class SnakeBodyHandler : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             bodyparts.Add(transform.GetChild(i).GetComponent<BodyBlock>());
+        }
+    }
+
+    private void SetupStartBody()
+    {
+        if (bodyparts.Count != startingBodyBlocksAmount)
+        {
+            SetSnakeLength(startingBodyBlocksAmount);
         }
     }
 
