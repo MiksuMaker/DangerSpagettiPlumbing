@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
     #region Properties
     // References
     SnakeController controller;
+    SnakeBodyHandler bodyHandler;
 
     // Events
     public delegate void ResetGame();
@@ -19,6 +20,9 @@ public class PlayerInput : MonoBehaviour
     KeyCode right = KeyCode.D;
 
     KeyCode restart = KeyCode.R;
+    KeyCode increaseLength = KeyCode.KeypadPlus;
+    KeyCode decreaseLength = KeyCode.KeypadMinus;
+
     // Inputs
     Vector2 mostRecentMovementInput;
     #endregion
@@ -28,6 +32,7 @@ public class PlayerInput : MonoBehaviour
     {
         // Find Controller
         controller = FindObjectOfType<SnakeController>();
+        bodyHandler = FindObjectOfType<SnakeBodyHandler>();
     }
     #endregion
 
@@ -57,9 +62,22 @@ public class PlayerInput : MonoBehaviour
 
     private void HandleDebugControls()
     {
+        // Restarting
         if (Input.GetKeyDown(restart))
         {
             resetGame?.Invoke();
+        }
+
+        // Growing and decreasing
+        if (Input.GetKeyDown(increaseLength))
+        {
+            // Make snake grow
+            bodyHandler.RegisterLengthAlteration(1);
+        }
+        else if (Input.GetKeyDown(decreaseLength))
+        {
+            // Decrease snake length
+            bodyHandler.RegisterLengthAlteration(-1);
         }
     }
     #endregion

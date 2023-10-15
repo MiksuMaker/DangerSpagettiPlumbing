@@ -123,7 +123,7 @@ public class SnakeMover : MonoBehaviour
         {
             // Eat them
             EdibleManager.Instance.EatEdibleAtPos(curPos);
-            body.RegisterGrowth();
+            body.RegisterLengthAlteration();
         }
 
         // Check for edibles in front of the snake

@@ -10,7 +10,7 @@ public class SnakeBodyHandler : MonoBehaviour
 
     List<BodyBlock> bodyparts = new List<BodyBlock>();
     List<(BodyBlock, Vector2)> startPositions = new List<(BodyBlock, Vector2)>();
-    int growthNeeded = 0;
+    int lengthAlterationAmount = 0;
 
     bool lastMoveDirectionIsRight = true;
 
@@ -85,9 +85,19 @@ public class SnakeBodyHandler : MonoBehaviour
         bodyparts[0].transform.position += new Vector3(nextCoordinates.x, nextCoordinates.y);
 
         // Check the need for growth
-        if (growthNeeded != 0) { HandleGrowth(prevBodypartPos); }
+        if (lengthAlterationAmount > 0) 
+        {
+            // If growing, no need to move the rest of the body
+            HandleGrowth(prevBodypartPos); 
+        }
         else
         {
+            // Check if the snake needs to get shorter
+            if (lengthAlterationAmount < 0)
+            {
+                DecreaseSnakeSize();
+            }
+
             // Go through the list of bodyparts and move them along
             for (int i = 1; i < bodyparts.Count; i++)
             {
@@ -165,9 +175,9 @@ public class SnakeBodyHandler : MonoBehaviour
     #endregion
 
     #region Growing
-    public void RegisterGrowth(int growthAmount = 1)
+    public void RegisterLengthAlteration(int alterationAmount = 1)
     {
-        growthNeeded += growthAmount;
+        lengthAlterationAmount += alterationAmount;
     }
 
     private void HandleGrowth(Vector2 newGrowthPos)
@@ -178,10 +188,41 @@ public class SnakeBodyHandler : MonoBehaviour
         // Arrange it to the right position
         bodyparts.Insert(1, b);
         b.transform.position = newGrowthPos;
-        growthNeeded--;
+        lengthAlterationAmount--;
 
         // Update their color
         graphics.UpdateColors();
+    }
+
+    private void DecreaseSnakeSize(bool removeAllAtOnce = true)
+    {
+        int count = bodyparts.Count - 1;
+
+        // Remove the last piece
+        for (int i = count; i > 0; i--)
+        {
+            // "Decrease" the amount needed to subtract
+            lengthAlterationAmount++;
+
+            // If it is too short, don't remove
+            if (i <= 2) { break; }
+
+            BodyBlock removable = bodyparts[i]; // Stash
+
+            // Remove from list
+            bodyparts.Remove(removable);
+
+            // Destroy
+            Destroy(removable.gameObject);
+
+
+            // Check if any more pieces need removing
+            if (lengthAlterationAmount < 0 && removeAllAtOnce)
+            {
+                // Keep going
+            }
+            else { break; } // Else stop decreasing for now
+        }
     }
     #endregion
 
