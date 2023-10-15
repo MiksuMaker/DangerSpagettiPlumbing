@@ -186,7 +186,7 @@ public class SnakeBodyHandler : MonoBehaviour
             diff = currentLength - desiredLength;
             RegisterLengthAlteration(-diff);
         }
-        else // Is it longer?
+        else if (desiredLength > currentLength)// Is it longer?
         {
             diff = desiredLength - currentLength;
             RegisterLengthAlteration(diff);
