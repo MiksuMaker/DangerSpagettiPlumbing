@@ -59,10 +59,12 @@ public class SnakeBodyHandler : MonoBehaviour
         if (snakeDropper != null)
         { StopCoroutine(snakeDropper); }
 
-        // Delete extra blocks?
+        // Delete extra blocks
+        int startLength = startPositions.Count;
+        SetSnakeLength(startLength);
 
         // Reset the blocks to starting positions
-        for (int i = 0; i < startPositions.Count; i++)
+        for (int i = 0; i < startLength; i++)
         {
             bodyparts[i].transform.position = startPositions[i].Item2;
         }
@@ -175,6 +177,23 @@ public class SnakeBodyHandler : MonoBehaviour
     #endregion
 
     #region Growing
+    public void SetSnakeLength(int desiredLength)
+    {
+        int currentLength = bodyparts.Count;
+        int diff;
+        if (desiredLength < currentLength) // Is it shorter?
+        {
+            diff = currentLength - desiredLength;
+            RegisterLengthAlteration(-diff);
+        }
+        else // Is it longer?
+        {
+            diff = desiredLength - currentLength;
+            RegisterLengthAlteration(diff);
+            DecreaseSnakeSize();
+        }
+    }
+
     public void RegisterLengthAlteration(int alterationAmount = 1)
     {
         lengthAlterationAmount += alterationAmount;
